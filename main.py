@@ -69,7 +69,7 @@ def sort_randomly(numbers: list) -> list:
 
 
 def create_dict(shuffled_list: list) -> dict:
-    return {i: num for i, num in enumerate(shuffled_list)}
+    return {i + 1: num for i, num in enumerate(shuffled_list)}
 
 
 def main() -> None:
