@@ -68,11 +68,18 @@ def sort_randomly(numbers: list) -> list:
     return numbers
 
 
+def create_dict(shuffled_list: list) -> dict:
+    return {i: num for i, num in enumerate(shuffled_list)}
+
+
 def main() -> None:
     new_list = generate_100_numbers()
     print(f'Генеруємо 100 чисел від 1 до 100: {new_list}')
     shuffled_list = sort_randomly(new_list)
     print(f'Перемішуємо їх у випадковому порядку: {shuffled_list}')
+    result_dict = create_dict(shuffled_list)
+    print(f'Створюємо словник: {result_dict}')
+
 
 if __name__ == '__main__':
     main()
