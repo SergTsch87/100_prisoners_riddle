@@ -72,6 +72,46 @@ def create_dict(shuffled_list: list) -> dict:
     return {i + 1: num for i, num in enumerate(shuffled_list)}
 
 
+def chain_gen(some_dict: dict) -> dict:
+    curr_key = some_dict.keys()[0]
+    list_keys = [] # тут зберігатимемо список ключів ланцюга chain_dict
+
+    while curr_key in some_dict:
+        curr_value = some_dict[curr_key]
+
+        print(f'Поточний ключ: {curr_key}, Поточне значення і Наступний ключ: {curr_value}')
+        
+        # # А що робить цей рядок?:
+        # yield curr_value # повертає поточне значення і зупиняє виконання функції до наступного виклику генератора
+        # # А якщо без цього рядка, то функція буде виконуватися без зупинки,
+        # # і ми отримаємо нескінченний цикл, який буде виводити поточний ключ,
+        # # поточне значення і наступний ключ без зупинки.
+        # # Це може призвести до перевантаження пам'яті або до зависання програми.
+        # # Тому важливо використовувати yield для створення генератора,
+        # # який дозволяє нам отримувати значення по одному
+        # # і зупиняти виконання функції до наступного виклику генератора.     
+
+        # Умова виходу, якщо значення порожнє, або посилається на неіснуючий ключ,
+        # або якщо ми повернулися до початкового ключа
+        if curr_value == '' or curr_value not in some_dict or curr_value == some_dict.keys()[0]:
+            break
+        
+        list_keys.append(curr_key)
+        
+        # Ключ наступної ітерації буде поточним значенням, яке ми отримали з словника за поточним ключем
+        curr_key = curr_value
+
+    # Словник із потрібними ключами:
+    extracted_dict = {k: some_dict[k] for k in list_keys if k in some_dict}
+
+    # Словник із рештою ключів:
+    remaining_dict = {k: v for k, v in some_dict.items() if k not in list_keys}
+
+    # extracted_dict - це словник, який містить лише ті пари ключ-значення з some_dict,
+    # які не потрапили до chain_dicts
+    return extracted_dict, remaining_dict
+
+
 def main() -> None:
     new_list = generate_100_numbers()
     print(f'Генеруємо 100 чисел від 1 до 100: {new_list}')
@@ -79,6 +119,12 @@ def main() -> None:
     print(f'Перемішуємо їх у випадковому порядку: {shuffled_list}')
     result_dict = create_dict(shuffled_list)
     print(f'Створюємо словник: {result_dict}')
+
+    chained_list = chain_gen(result_dict)
+    print(f'Згенеровані ланцюги: {chained_list}')
+
+    # chained_list = chain_gen(result_dict)
+    # print(f'Об\'єднуємо значення словника: {chained_list}')
 
 
 if __name__ == '__main__':
