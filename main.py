@@ -73,13 +73,14 @@ def create_dict(shuffled_list: list) -> dict:
 
 
 def chain_gen(some_dict: dict) -> dict:
-    curr_key = some_dict.keys()[0]
+    # curr_key = some_dict.keys()[0] # Error: 'dict_keys' object is not subscriptable
+    curr_key = next(iter(some_dict)) # отримуємо перший ключ словника
     list_keys = [] # тут зберігатимемо список ключів ланцюга chain_dict
 
     while curr_key in some_dict:
         curr_value = some_dict[curr_key]
 
-        print(f'Поточний ключ: {curr_key}, Поточне значення і Наступний ключ: {curr_value}')
+        print(f'{curr_key} -> {curr_value}')
         
         # # А що робить цей рядок?:
         # yield curr_value # повертає поточне значення і зупиняє виконання функції до наступного виклику генератора
@@ -93,7 +94,7 @@ def chain_gen(some_dict: dict) -> dict:
 
         # Умова виходу, якщо значення порожнє, або посилається на неіснуючий ключ,
         # або якщо ми повернулися до початкового ключа
-        if curr_value == '' or curr_value not in some_dict or curr_value == some_dict.keys()[0]:
+        if curr_value == '' or curr_value not in some_dict or curr_value == next(iter(some_dict)):
             break
         
         list_keys.append(curr_key)
@@ -123,8 +124,9 @@ def main() -> None:
     chained_list = chain_gen(result_dict)
     print(f'Згенеровані ланцюги: {chained_list}')
 
-    # chained_list = chain_gen(result_dict)
-    # print(f'Об\'єднуємо значення словника: {chained_list}')
+    chain_dict, remaining_dict = chain_gen(result_dict)
+    print(f'Словник з ланцюгом: {chain_dict}')
+    print(f'Залишковий словник: {remaining_dict}')
 
 
 if __name__ == '__main__':
