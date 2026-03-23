@@ -100,6 +100,23 @@ def chain_gen(some_dict: dict) -> dict:
     return extracted_dict, remaining_dict
 
 
+def gen_list_dicts(result_dict):
+    chain_dict = result_dict
+    list_dicts = []
+
+    while 1 <= len(result_dict) <= 100:
+        chain_dict, remaining_dict = chain_gen(result_dict)
+        print(f'Словник з ланцюгом: {chain_dict}')
+        print(f'Довжина ланцюга: {len(chain_dict)}')
+        result_dict = remaining_dict
+        print(f'Оновлений словник: {result_dict}')
+        print('---' * 10)
+    
+        list_dicts.append(chain_dict)
+
+    return list_dicts
+
+
 def main() -> None:
     new_list = generate_100_numbers()
     print(f'Генеруємо 100 чисел від 1 до 100: {new_list}')
@@ -108,44 +125,20 @@ def main() -> None:
     result_dict = create_dict(shuffled_list)
     print(f'Створюємо словник: {result_dict}')
 
-    # chained_list = chain_gen(result_dict)
-    # print(f'Згенеровані ланцюги: {chained_list}')
+    # chain_dict = result_dict
+    # list_dicts = []
 
-    # Чому далі цей код не відображає ланцюг, який ми генеруємо за допомогою функції chain_gen? 
-    # ?.. Тому що ми не оновлюємо словник result_dict після кожного виклику функції chain_gen,
-    # ?.. і тому ми не отримуємо новий ланцюг, який може бути згенерований на основі оновленого словника. 
+    # while 1 <= len(result_dict) <= 100:
+    #     chain_dict, remaining_dict = chain_gen(result_dict)
+    #     print(f'Словник з ланцюгом: {chain_dict}')
+    #     print(f'Довжина ланцюга: {len(chain_dict)}')
+    #     result_dict = remaining_dict
+    #     print(f'Оновлений словник: {result_dict}')
+    #     print('---' * 10)
+    #     list_dicts.append(result_dict)
 
-    # А хіба "result_dict = remaining_dict" - це не оновлення словника result_dict після кожного виклику функції
-    # chain_gen?
-    # ?.. Так, це оновлення словника result_dict після кожного виклику функції chain_gen,
-    # ?.. але проблема полягає в тому, що ми не оновлюємо змінну chain_dict
-    # після кожного виклику функції chain_gen,
-    # ?.. і тому ми не отримуємо новий ланцюг, який може  бути згенерований на основі оновленого словника.    
-
-    chain_dict = result_dict
-
-    # Як краще оптимізувати перевірку довжини ланцюга in while loop, щоб вона була в межах [1..100]?
-    # ?.. Ви можете оптимізувати перевірку довжини ланцюга в while loop,
-    # використовуючи оператор логічного "and" для перевірки обох умов одночасно.     
-    
-    # Чи це оптимальна перевірка умови виходу?:
-    # while len(chain_dict) <= 100 and len(chain_dict) >= 0:
-    # # ?.. Ні, ця перевірка умови виходу не є оптимальною, оскільки вона дозволяє ланцюгу бути довжиною 0,
-    # # що може бути недопустимим у вашому випадку. 
-    # # ?.. Краще використовувати перевірку умови виходу, яка дозволяє ланцюгу бути довжиною від 1 до 100,
-    # # наприклад: `while 1 <= len(chain_dict) <= 100:`.   
-
-
-
-    while 1 <= len(result_dict) <= 100:
-        # print(f'Поточний словник: {result_dict}')  
-        chain_dict, remaining_dict = chain_gen(result_dict)
-        print(f'Словник з ланцюгом: {chain_dict}')
-        # print(f'Залишковий словник: {remaining_dict}')
-        print(f'Довжина ланцюга: {len(chain_dict)}')
-        result_dict = remaining_dict
-        print(f'Оновлений словник: {result_dict}')
-        print('---' * 10)
+    list_dicts = gen_list_dicts(result_dict)
+    print(f'list_dicts: {list_dicts}')
 
 
 
