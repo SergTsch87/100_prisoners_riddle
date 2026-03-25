@@ -62,14 +62,14 @@ def gen_list_dicts(result_dict) -> bool:
     while 1 <= len(result_dict) <= 100:
         chain_dict, remaining_dict = chain_gen(result_dict)
         # print(f'Словник з ланцюгом: {chain_dict}')
-        print(f'Довжина ланцюга: {len(chain_dict)}')
+        # print(f'Довжина ланцюга: {len(chain_dict)}')
         
         if len(chain_dict) > 50: # Ланцюг > 50 - Це поразка у грі
             return False # Lose!
         
         result_dict = remaining_dict
         # print(f'Оновлений словник: {result_dict}')
-        print('---' * 10)
+        # print('---' * 10)
     
         list_dicts.append(chain_dict)
 
@@ -78,25 +78,22 @@ def gen_list_dicts(result_dict) -> bool:
 
 
 def main() -> None:
-    new_list = generate_100_numbers()
-    print(f'Генеруємо 100 чисел від 1 до 100: {new_list}')
-    shuffled_list = sort_randomly(new_list)
-    print(f'Перемішуємо їх у випадковому порядку: {shuffled_list}')
-    result_dict = create_dict(shuffled_list)
-    print(f'Створюємо словник: {result_dict}')
-    
-    # # Генеруємо ланцюги (dicts), та визначаємо: Win or Lose
-    # list_dicts = gen_list_dicts(result_dict)
-    # if list_dicts:
-    #     print(f'Win!\nlist_dicts: {list_dicts}')
-    # else:
-    #     print('Lose!')
+    for row in range(1, 11):
+        for col in range(1, 11):
+            new_list = generate_100_numbers()
+            # print(f'Генеруємо 100 чисел від 1 до 100: {new_list}')
+            shuffled_list = sort_randomly(new_list)
+            # print(f'Перемішуємо їх у випадковому порядку: {shuffled_list}')
+            result_dict = create_dict(shuffled_list)
+            # print(f'Створюємо словник: {result_dict}')
+            
+            # Win or Lose
+            if gen_list_dicts(result_dict):
+                print(1, end="")
+            else:
+                print(0, end="")
 
-    # Генеруємо ланцюги (dicts), та визначаємо: Win or Lose
-    if gen_list_dicts(result_dict):
-        print('Win!')
-    else:
-        print('Lose!')
+        print()
 
 
 if __name__ == '__main__':
