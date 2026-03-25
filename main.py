@@ -78,8 +78,10 @@ def gen_list_dicts(result_dict) -> bool:
 
 
 def main() -> None:
-    for row in range(1, 11):
-        for col in range(1, 11):
+    win_counter = 0
+    lose_counter = 0
+    for _ in range(1, 11):
+        for _ in range(1, 11):
             new_list = generate_100_numbers()
             # print(f'Генеруємо 100 чисел від 1 до 100: {new_list}')
             shuffled_list = sort_randomly(new_list)
@@ -89,12 +91,17 @@ def main() -> None:
             
             # Win or Lose
             if gen_list_dicts(result_dict):
+                win_counter += 1
                 print(1, end="")
             else:
+                lose_counter += 1
                 print(0, end="")
 
         print()
-
+    
+    print(f'Victories: {win_counter}')
+    print(f'Defeats: {lose_counter}')
+    
 
 if __name__ == '__main__':
     main()
