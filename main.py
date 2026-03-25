@@ -55,7 +55,7 @@ def chain_gen(some_dict: dict) -> dict:
     return extracted_dict, remaining_dict
 
 
-def gen_list_dicts(result_dict) -> list[dict] | None:
+def gen_list_dicts(result_dict) -> bool:
     chain_dict = result_dict
     list_dicts = []
 
@@ -65,7 +65,7 @@ def gen_list_dicts(result_dict) -> list[dict] | None:
         print(f'Довжина ланцюга: {len(chain_dict)}')
         
         if len(chain_dict) > 50: # Ланцюг > 50 - Це поразка у грі
-            return None
+            return False # Lose!
         
         result_dict = remaining_dict
         # print(f'Оновлений словник: {result_dict}')
@@ -73,7 +73,8 @@ def gen_list_dicts(result_dict) -> list[dict] | None:
     
         list_dicts.append(chain_dict)
 
-    return list_dicts
+    # return list_dicts
+    return True # Win!
 
 
 def main() -> None:
@@ -84,11 +85,18 @@ def main() -> None:
     result_dict = create_dict(shuffled_list)
     print(f'Створюємо словник: {result_dict}')
     
-    list_dicts = gen_list_dicts(result_dict)
-    if list_dicts:
-        print(f'Win!\nlist_dicts: {list_dicts}')
+    # # Генеруємо ланцюги (dicts), та визначаємо: Win or Lose
+    # list_dicts = gen_list_dicts(result_dict)
+    # if list_dicts:
+    #     print(f'Win!\nlist_dicts: {list_dicts}')
+    # else:
+    #     print('Lose!')
+
+    # Генеруємо ланцюги (dicts), та визначаємо: Win or Lose
+    if gen_list_dicts(result_dict):
+        print('Win!')
     else:
-        print('Loose!')
+        print('Lose!')
 
 
 if __name__ == '__main__':
